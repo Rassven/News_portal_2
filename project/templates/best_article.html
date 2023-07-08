@@ -1,0 +1,53 @@
+{% extends 'flatpages/default.html' %}
+
+<!-- {% load custom_tags %}
+{% load custom_filters %}  -->
+
+
+{% block title %}
+Article
+{% endblock title %}
+
+{% block content %}
+<h1>Описание лучшей статьи</h1>
+<hr>
+<br>
+<h2>
+    <table valign="down">
+        <tr>
+            <td>Название статьи (цензурировано):</td>
+            <td>{{ article.name|censor }}</td>
+        </tr>
+        <tr>
+            <td>Категория:</td>
+            <td>{{ article.category }}</td>
+        </tr>
+                <tr>
+            <td>Рейтинг:</td>
+            <td>{{ article.rating }}</td>
+        </tr>
+        <tr>
+            <td>Время публикации:</td>
+            <td>{{ article.pub_time }}</td>
+        </tr>
+        <tr>
+            <td valign="top">Содержание (полное):</td>
+            <!-- <td>{{ article.text|truncatewords:5 }} -->
+            <td>{{ article.text }}
+                <!-- {% if user.is.authenticated %}
+                {{ article.description }}
+                {% else %}
+                Только для авторизованных пользователей
+                {% endif %} -->
+            </td>
+        </tr>
+        <!--  <tr><td>Ограничения публикации</td></tr>  -->
+        </tr>
+        <tr>
+            <td valign="top">Содержание (цензурировано):</td>
+            <td>{{ article.text|censor }}</td>
+        </tr>
+    </table>
+    <hr>
+</h2>
+{% endblock content %}

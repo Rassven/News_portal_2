@@ -1,0 +1,64 @@
+{% extends 'flatpages/default.html' %}
+
+<!--  {% load custom_filters %}
+{% load custom_tags %}  -->
+
+
+{% block title %}
+Статьи
+{% endblock title %}
+
+{% block content %}
+<!-- <h3>{% current_time '%b %d %Y' %}</h3>  -->
+    <h1>Все статьи</h1>
+
+<h4><i>
+{% if articles|length > 1%}
+(всего {{ articles.count }} )
+{% else %}
+(одна)
+{% endif %}
+</i></h4>
+<hr>
+
+<h3> {{ empty|default_if_none:"Переменная empty пока пуста." }} </h3>
+    {% if articles %}
+
+<table> <!-- Начинаем описывать таблицу -->
+           <tr> <!-- Добавляем строку -->
+               <td> <!-- Добавляем ячейку в строку -->
+                   <b>Название</b>
+               </td>
+               <td>
+                   <b>Категория</b>
+               </td>
+               <td>
+                   <b>Рейтинг</b>
+               </td>
+               <td>
+                   <b>Текст</b>
+               </td>
+               <td>
+                   <b>Время</b>
+               </td>
+           </tr>
+
+{% for article in articles %}
+           <tr>
+               <td>{{ article.name }}</td>
+               <td>{{ article.category.name }}</td>
+               <td>{{ article.rating }}</td>
+               <td>{{ article.text|truncatechars:5|truncatewords:1 }}</td>
+               <td>{{ article.pub_time }}</td>
+               <!-- <td>{{ time_now|date:'Y M d l' }}</td> -->
+           </tr>
+    {% endfor %}
+       </table>
+
+<hr>
+<hr>
+       {{ articles }}
+    {% else %}
+        <h2>Статей нет!</h2>
+    {% endif %}
+{% endblock content %}

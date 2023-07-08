@@ -1,0 +1,25 @@
+{% extends 'flatpages/default.html' %}
+<!-- {% load custom_tags %}  -->
+
+
+{% block title %}
+Article
+{% endblock title %}
+
+{% block content %}
+
+<h2>
+    <b>Название статьи: </b><i>{{ article.name }}</i>
+    <br>
+    <b>Категория: </b><i>{{ article.category }}</i>
+    <br>
+    <b>Содержание: </b><h5><i>{{ article.text }}</i></h5>
+    <br>
+    <b>Рейтинг: </b><i>{{ article.rating }}</i>
+    <br>
+    <b>Время: </b><i>{{ article.pub_time }}</i>
+    <br>
+    <hr>
+</h2>
+
+{% endblock content %}
