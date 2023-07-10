@@ -1,8 +1,8 @@
 from django import template
 register = template.Library()
 
-black_list = ['бра*', 'для', 'из*я', '*ать', 'фай*', 'свед*', 'ва*', 'нецен*']
-cahnge_list = ['@#$!', 'for', 'img', '*!', 'file', 'info', 'U!', 'uncensord']
+black_list = ['бра*', 'для', 'из*я', '*ать', 'фай*', 'свед*', 'ва*', 'нецен*', '*сказ*', ]
+change_list = ['@#$!', 'for', 'img', '*!', 'file', 'info', 'U!', 'uncensored', '*', ]
 
 @register.filter()
 def censor(value):
@@ -21,6 +21,7 @@ def censor(value):
                 c_word += c_symb
             else:
                 txt_list.append(c_word); c_word = c_symb; w_type = 1
+    txt_list.append(c_word)
 
     censored_txt = ''; chk_word = ['', 0]
     for cur_word in txt_list:
@@ -34,15 +35,23 @@ def censor(value):
                     if cw_pars[2] == 0:  # без пропусков (*)
                         if chk_word[0] == cw_pars[0]:
                             cng_flag = 1
-                            var = cahnge_list[black_list.index(cw_pars[0])]
+                            var = change_list[black_list.index(cw_pars[0])]
                             if len(var) < 2:
                                 censored_txt += var*(chk_word[1])
+                            else:
+                                censored_txt += var
+                    elif cw_pars[0][0] == '*' and cw_pars[0][-1] == '*':
+                        if cw_pars[0][1:-1] in chk_word[0]:
+                            cng_flag = 1
+                            var = change_list[black_list.index(cw_pars[0])]
+                            if len(var) < 2:
+                                censored_txt += var * (chk_word[1])
                             else:
                                 censored_txt += var
                     elif cw_pars[2] == cw_pars[1]:  # in the end
                         if chk_word[0][0:cw_pars[1]-1] == cw_pars[0][0:cw_pars[1]-1]:
                             cng_flag = 1
-                            var = cahnge_list[black_list.index(cw_pars[0])]
+                            var = change_list[black_list.index(cw_pars[0])]
                             if len(var) < 2:
                                 censored_txt += var * (chk_word[1])
                             else:
@@ -50,7 +59,7 @@ def censor(value):
                     elif cw_pars[2] == 1:  # in begin
                         if chk_word[0][-cw_pars[1]+1:chk_word[1]] == cw_pars[0][-cw_pars[1]+1:cw_pars[1]]:
                             cng_flag = 1
-                            var = cahnge_list[black_list.index(cw_pars[0])]
+                            var = change_list[black_list.index(cw_pars[0])]
                             if len(var) < 2:
                                 censored_txt += var * (chk_word[1])
                             else:
@@ -58,7 +67,7 @@ def censor(value):
                     elif cw_pars[2]>1 and cw_pars[2]<cw_pars[1]:
                         if chk_word[0][0:cw_pars[2]-1] == cw_pars[0][0:cw_pars[2]-1] and chk_word[0][-(cw_pars[1]-cw_pars[2]):chk_word[1]] == cw_pars[0][-(cw_pars[1]-cw_pars[2]):cw_pars[1]]:
                             cng_flag = 1
-                            var = cahnge_list[black_list.index(cw_pars[0])]
+                            var = change_list[black_list.index(cw_pars[0])]
                             if len(var) < 2:
                                 censored_txt += var * (chk_word[1])
                             else:
