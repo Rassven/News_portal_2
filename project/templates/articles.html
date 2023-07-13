@@ -12,21 +12,24 @@
 <!-- <h3>{% current_time '%b %d %Y' %}</h3>  -->
     <h1>Все статьи</h1>
 
-<h4><i>
+<!-- <h4><i>
 {% if articles|length > 1%}
 (всего {{ articles.count }} )
 {% else %}
 (одна)
 {% endif %}
-</i></h4>
+</i></h4> -->
 <hr>
 
 <h3> {{ empty|default_if_none:"Переменная empty пока пуста." }} </h3>
     {% if articles %}
 
-<table> <!-- Начинаем описывать таблицу -->
-           <tr> <!-- Добавляем строку -->
-               <td> <!-- Добавляем ячейку в строку -->
+<table>
+           <tr>
+                <td>
+                   <b>Индекс в базе</b>
+               </td>
+               <td>
                    <b>Название</b>
                </td>
                <td>
@@ -39,26 +42,59 @@
                    <b>Текст</b>
                </td>
                <td>
-                   <b>Время</b>
+                   <b>Время создания</b>
+               </td>
+                <td>
+                   <b>Читать здесь</b>
                </td>
            </tr>
 
 {% for article in articles %}
            <tr>
+               <td>{{ article.id }}</td>
                <td>{{ article.name }}</td>
                <td>{{ article.category.name }}</td>
                <td>{{ article.rating }}</td>
                <td>{{ article.text|truncatechars:5|truncatewords:1 }}</td>
-               <td>{{ article.pub_time }}</td>
+               <td>{{ article.pub_time|date:'Y M d H m s' }}</td>
+               <td><a href="{{article.id}}">{{ article.name }}</a></td>
                <!-- <td>{{ time_now|date:'Y M d l' }}</td> -->
            </tr>
     {% endfor %}
        </table>
 
 <hr>
-<hr>
        {{ articles }}
     {% else %}
         <h2>Статей нет!</h2>
     {% endif %}
+
+<br>
+<hr>
+
+
+{# Добавляем пагинацию на страницу #}
+<h2>
+   {# Информация о предыдущих страницах #}
+   {% if page_obj.has_previous %}
+       <a href="?page=1">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+            ...
+            <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {# Информация о текущей странице #}
+   {{ page_obj.number }}
+
+   {# Информация о следующих страницах #}
+   {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+            ...
+           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+</h2>
+
 {% endblock content %}

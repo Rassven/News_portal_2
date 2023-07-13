@@ -3,13 +3,15 @@
 
 
 {% block title %}
-Article
+Лучшая статья
 {% endblock title %}
 
 {% block content %}
 
 <h2>
     <b>Название статьи: </b><i>{{ article.name }}</i>
+    <br>
+    <b>Индекс в базе: </b><i>{{ article.id }}</i>
     <br>
     <b>Категория: </b><i>{{ article.category }}</i>
     <br>
@@ -21,5 +23,5 @@ Article
     <br>
     <hr>
 </h2>
-
+<h5><a href="/news/">К списку статей</a></h5>
 {% endblock content %}

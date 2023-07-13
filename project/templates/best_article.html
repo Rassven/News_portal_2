@@ -9,14 +9,18 @@ Article
 {% endblock title %}
 
 {% block content %}
-<h1>Описание лучшей статьи</h1>
+<h3>Описание лучшей статьи</h3>
 <hr>
 <br>
-<h2>
+<h5>
     <table valign="down">
         <tr>
             <td>Название статьи (цензурировано):</td>
             <td>{{ article.name|censor }}</td>
+        </tr>
+        <tr>
+            <td>Индекс в базе: </td>
+            <td><i>{{ article.id }}</i></td>
         </tr>
         <tr>
             <td>Категория:</td>
@@ -33,21 +37,22 @@ Article
         <tr>
             <td valign="top">Содержание (полное):</td>
             <!-- <td>{{ article.text|truncatewords:5 }} -->
-            <td>{{ article.text }}
+            <td><h6>{{ article.text }}
                 <!-- {% if user.is.authenticated %}
                 {{ article.description }}
                 {% else %}
                 Только для авторизованных пользователей
                 {% endif %} -->
+                </h6>
             </td>
         </tr>
         <!--  <tr><td>Ограничения публикации</td></tr>  -->
         </tr>
         <tr>
             <td valign="top">Содержание (цензурировано):</td>
-            <td>{{ article.text|censor }}</td>
+            <td><h6>{{ article.text|censor }}</h6></td>
         </tr>
     </table>
     <hr>
-</h2>
+</h5>
 {% endblock content %}
