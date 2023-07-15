@@ -1,0 +1,69 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+{% load custom_tags %}
+{% block title %}Статьи{% endblock title %}
+
+{% block content %}
+<h1>Статьи</h1>
+<h4><a href="/portal/articles/create/">Создать статью</a></h4>
+<hr>
+{% if articles %}
+
+<table>
+    <tr>
+        <b>
+            <td>Индекс в базе</td>
+            <td>Название</td>
+            <td>Категория</td>
+            <td>Рейтинг</td>
+            <td>Текст</td>
+            <td>Дата создания</td>
+            <td>Время создания</td>
+            <td>Читать здесь</td>
+            <td>Действия</td>
+        </b>
+    </tr>
+    {% for article in articles %}
+    <tr>
+        <td>{{ article.id }}</td>
+        <td>{{ article.name }}</td>
+        <td>{{ article.category.name }}</td>
+        <td>{{ article.rating }}</td>
+        <td>{{ article.text|truncatechars:5|truncatewords:1 }}</td>
+        <td>{{ article.pub_time|date:'Y M d' }}</td>
+        <td>{{ article.pub_time|date:'H m s' }}</td>
+        <td><a href="/portal/{{article.id}}">{{ article.name }}</a></td>
+        <td><a href="/portal/{{article.id}}/update">Редактировать</a></td>
+        <td><a href="/portal/{{article.id}}/delete">Удалить</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<hr>
+{{ articles }}
+{% else %}
+<h2>Статей нет!</h2>
+{% endif %}
+<br>
+<hr>
+
+{# Страничительство #}
+<h2>
+    {% if page_obj.has_previous %}
+        <a href="?page=1">1</a>
+        {% if page_obj.previous_page_number != 1 %}
+            ...
+            <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+        {% endif %}
+    {% endif %}
+    {{ page_obj.number }}
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+        {% if paginator.num_pages != page_obj.next_page_number %}
+        ...
+        <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+        {% endif %}
+    {% endif %}
+</h2>
+<a href='/portal'>К списку статей</a>
+{% endblock content %}

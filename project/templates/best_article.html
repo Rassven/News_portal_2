@@ -9,17 +9,17 @@ Article
 {% endblock title %}
 
 {% block content %}
-<h3>Описание лучшей статьи</h3>
+<h3>Описание лучшей публикации</h3>
 <hr>
 <br>
 <h5>
     <table valign="down">
         <tr>
-            <td>Название статьи (цензурировано):</td>
+            <td>Название (цензурировано):</td>
             <td>{{ article.name|censor }}</td>
         </tr>
         <tr>
-            <td>Индекс в базе: </td>
+            <td>Индекс в базе:</td>
             <td><i>{{ article.id }}</i></td>
         </tr>
         <tr>
@@ -55,4 +55,5 @@ Article
     </table>
     <hr>
 </h5>
+<a href='/portal'>К списку статей</a>
 {% endblock content %}

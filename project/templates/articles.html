@@ -1,24 +1,27 @@
 {% extends 'flatpages/default.html' %}
-
 <!--  {% load custom_filters %}
 {% load custom_tags %}  -->
-
-
+{% load custom_filters %}
+{% load custom_tags %}
 {% block title %}
 Статьи
 {% endblock title %}
 
 {% block content %}
 <!-- <h3>{% current_time '%b %d %Y' %}</h3>  -->
-    <h1>Все статьи</h1>
-
-<!-- <h4><i>
+    <h1>Все публикации</h1>
+<h4>
+<a href="articles/create/">Создать статью</a>
+<a href="news/create/">Создать новость</a>
+</h4>
+    <!-- <h4><i>
 {% if articles|length > 1%}
 (всего {{ articles.count }} )
 {% else %}
 (одна)
 {% endif %}
 </i></h4> -->
+
 <hr>
 
 <h3> {{ empty|default_if_none:"Переменная empty пока пуста." }} </h3>
@@ -72,24 +75,21 @@
 <br>
 <hr>
 
-
-{# Добавляем пагинацию на страницу #}
 <h2>
-   {# Информация о предыдущих страницах #}
-   {% if page_obj.has_previous %}
-       <a href="?page=1">1</a>
-       {% if page_obj.previous_page_number != 1 %}
+    {# Информация о предыдущих страницах #}
+    {% if page_obj.has_previous %}
+    <a href="?page=1">1</a>
+        {% if page_obj.previous_page_number != 1 %}
             ...
             <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
-       {% endif %}
-   {% endif %}
-
-   {# Информация о текущей странице #}
-   {{ page_obj.number }}
+        {% endif %}
+    {% endif %}
+    {# Информация о текущей странице #}
+    {{ page_obj.number }}
 
    {# Информация о следующих страницах #}
    {% if page_obj.has_next %}
-       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+        <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
        {% if paginator.num_pages != page_obj.next_page_number %}
             ...
            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
